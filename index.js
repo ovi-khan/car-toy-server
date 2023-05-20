@@ -34,6 +34,7 @@ async function run() {
 
 
     const carCollection = client.db('carToys').collection('cars');
+    const postToysCollection = client.db('carToys').collection('postToys')
 
     app.get('/cars/:text', async(req, res) => {
       console.log(req.params.text)
@@ -46,14 +47,18 @@ async function run() {
       res.send(result)
     })
 
-    // app.get('/cars:id', async(req, res) => {
-        // const id = req.params.id;
-        // const query = { _id: new ObjectId(id) }
-        // const options = {
-            // projection: { categoryName: 1, img: 1 }
-        // }
-        // const result = await carCollection.findOne(query, options);
-        // res.send(result)
+    app.post('/PostToys', async(req, res) => {
+      const newCar = req.body;
+      const result = await postToysCollection.insertOne(newCar)
+      res.send(result)
+    })
+
+    // app.get('/cars', async(req, res) => {
+    //     const id = req.params.id;
+    //     const query = { _id: new ObjectId(id) }
+ 
+    //     const result = await carCollection.find(query);
+    //     res.send(result)
     // })
 
 
