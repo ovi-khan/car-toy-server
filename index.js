@@ -30,7 +30,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
 
     const carCollection = client.db('carToys').collection('cars');
@@ -53,45 +53,24 @@ async function run() {
       const result = carCollection.find({}).toArray();
       res.send(result)
     })
-    // app.get('/cars/:id', async(req, res) => {
-    //   console.log(req.params.id)
-    //   if(req.params.id == _id) {
-
-    //     const result = await carCollection.find({categoryName: req.params.id}).toArray();
-    //    return res.send(result)
-    //   }
-    //   const result = carCollection.find({}).toArray();
-    //   res.send(result)
-    // })
-
-    // app.get('/cars/:id', async(req, res) => {
-    //   const id = req.params.id;
-    //   const query = { _id: new ObjectId(id) }
-    //   const result = await carCollection.findOne(query)
-    //   res.send(result)
-    // })
+    
 
 
     // post a toy
 
-    app.post('/postToys', async(req, res) => {
-      const result = await postToysCollection.find().toArray()
+    app.get('/toys', async(req, res) => {
+      const cursor = postToysCollection.find()
+      const result = await cursor.toArray()
       res.send(result)
     })
 
-    app.post('/postToys', async(req, res) => {
+    app.post('/toys', async(req, res) => {
       const newCar = req.body;
       const result = await postToysCollection.insertOne(newCar)
       res.send(result)
     })
 
-    // app.get('/cars', async(req, res) => {
-    //     const id = req.params.id;
-    //     const query = { _id: new ObjectId(id) }
- 
-    //     const result = await carCollection.find(query);
-    //     res.send(result)
-    // })
+    
 
 
     // Send a ping to confirm a successful connection
