@@ -65,7 +65,13 @@ async function run() {
     })
 
     app.get('/toys/:id', async(req, res) => {
-      
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const options = {
+        projection: { service_id: 1 }
+      }
+      const result = await postToysCollection.findOne(query, options)
+      res.send(result)
     })
 
     app.post('/toys', async(req, res) => {
